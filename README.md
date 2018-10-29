@@ -10,7 +10,7 @@ by adding `open_street_map` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:open_street_map, "~> 0.1.0"}
+    {:open_street_map, "~> 0.9.1"}
   ]
 end
 ```
