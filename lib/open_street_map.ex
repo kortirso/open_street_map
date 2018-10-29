@@ -27,8 +27,18 @@ defmodule OpenStreetMap do
   end
 
   def search(args) do
-    url = "search" <> List.foldl(Keyword.keys(args), "", fn(key, acc) -> acc <> add_to_options(key, to_string(args[key]), acc) end)
-    fetch(url)
+    generate_url(args)
+    |> prepare_url("search")
+    |> fetch
+  end
+
+  def generate_url(args) do
+    Enum.filter(args, fn({key, _value}) -> Enum.member?(valid_search_args(), key) end)
+    |> List.foldl("", fn({key, value}, acc) -> acc <> add_to_options(key, to_string(value), acc) end)
+  end
+
+  def valid_search_args do
+    [:q, :format, :addressdetails, :extratags, :namedetails, :viewbox, :bounded, :exclude_place_ids, :limit, :accept_language, :email]
   end
 
   def add_to_options(key, value, "") do
@@ -39,11 +49,19 @@ defmodule OpenStreetMap do
     "&" <> key_value_param(key, modify_search(value))
   end
 
+  def key_value_param(:accept_language, value) do
+    "accept-language=" <> value
+  end
+
   def key_value_param(key, value) do
     "#{key}=#{value}"
   end
 
   def modify_search(value) do
     String.replace(value, ~r/\s+/, "+")
+  end
+
+  def prepare_url(type, url) do
+    type <> url
   end
 end
