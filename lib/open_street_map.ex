@@ -1,17 +1,4 @@
 defmodule OpenStreetMap do
-  @moduledoc """
-  Documentation for OpenStreetMap.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> OpenStreetMap.hello()
-      :world
-
-  """
   def search(args) do
     call("search", args)
   end
@@ -21,7 +8,8 @@ defmodule OpenStreetMap do
   end
 
   defp call(type, args) do
-    generate_url(type, args)
+    type
+    |> generate_url(args)
     |> prepare_url(type)
     |> fetch
   end
