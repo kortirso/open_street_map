@@ -123,7 +123,7 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 ## Disclaimer
 
-Use this package at your own peril and risk, the author tried to simplify the use of [Nominatim service](https://wiki.openstreetmap.org/wiki/Nominatim) for integration into Ruby on Rails web applications.
+Use this package at your own peril and risk, the author tried to simplify the use of [Nominatim service](https://wiki.openstreetmap.org/wiki/Nominatim) for integration into Phoenix web applications.
 
 ## Documentation
 
