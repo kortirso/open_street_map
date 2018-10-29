@@ -4,7 +4,7 @@ defmodule OpenStreetMap.MixProject do
   def project do
     [
       app: :open_street_map,
-      version: "0.1.0",
+      version: "0.9.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps()
