@@ -35,7 +35,6 @@ defmodule OpenStreetMap.MixProject do
 
   defp package do
     [
-      files: ["lib", "mix.exs", "README"],
       maintainers: ["Anton Bogdanov"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/kortirso/open_street_map"}
