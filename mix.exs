@@ -8,7 +8,7 @@ defmodule OpenStreetMap.MixProject do
   def project do
     [
       app: :open_street_map,
-      version: "0.9.1",
+      version: "0.9.2",
       elixir: "~> 1.7",
       name: "OpenStreetMap",
       description: @description,
@@ -29,7 +29,7 @@ defmodule OpenStreetMap.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpoison, "1.4.0"},
+      {:httpoison, "~> 1.4"},
       {:poison, "~> 3.1"},
       {:ex_doc, "~> 0.14", only: :dev}
     ]
