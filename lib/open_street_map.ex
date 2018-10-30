@@ -26,7 +26,7 @@ defmodule OpenStreetMap do
     |> generate_url(args)
     |> prepare_url(type)
     |> fetch(args)
-    |> parse(args)
+    |> parse(args[:format])
   end
 
   defp generate_url(type, args) do
@@ -68,7 +68,7 @@ defmodule OpenStreetMap do
 
   defp fetch(url, args) do
     base_url = args[:hostname] || "https://nominatim.openstreetmap.org/"
-    headers = ["Accept": "Application/json; Charset=utf-8"]
+    headers = [{"Content-Type", "application/json"}, {"User-Agent", user_agent(args[:user_agent])}, {"Accept", "Application/json; Charset=utf-8"}]
     options = [ssl: [{:versions, [:'tlsv1.2']}], recv_timeout: 500]
     case HTTPoison.get(base_url <> url, headers, options) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body}
@@ -77,9 +77,29 @@ defmodule OpenStreetMap do
     end
   end
 
-  defp parse({result, response}, args) do
-    if result == :ok && args[:format] != 'xml' do
+  defp parse({result, response}, format) do
+    if parse_valid?(result, format) do
       {:ok, Poison.Parser.parse!(response)}
+    else
+      {:ok, response}
     end
+  end
+
+  defp parse_valid?(result, format) do
+    result == :ok && (format == "json" || format == "jsonv2")
+  end
+
+  defp user_agent(nil) do
+    "hex/open_street_map/#{random_string(16)}"
+  end
+
+  defp user_agent(value) do
+    value
+  end
+
+  defp random_string(length) do
+    :crypto.strong_rand_bytes(length)
+    |> Base.url_encode64
+    |> binary_part(0, length)
   end
 end

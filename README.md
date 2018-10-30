@@ -24,8 +24,8 @@ Request for search objects is #search.
 ```elixir
   OpenStreetMap.search(q: '135 pilkington avenue, birmingham', format: 'json', addressdetails: '1', accept_language: 'en')
 ```
-    q - query
-    format - one of the [xml|json|jsonv2]
+    q - query, required
+    format - one of the [xml|json|jsonv2], default - xml
     viewbox - The preferred area to find search results like <x1>,<y1>,<x2>,<y2>
     bounded - Restrict the results to only items contained with the viewbox, one of the [0|1]
     addressdetails - Include a breakdown of the address into elements, one of the [0|1]
@@ -36,6 +36,7 @@ Request for search objects is #search.
     accept_language - Preferred language order for showing search results, default - en
     email - If you are making large numbers of request please include a valid email address
     hostname - allow overwriting the host name for users who have their own Nominatim installation, default - https://nominatim.openstreetmap.org/
+    user_agent - User-Agent identifying the application, default - hex/open_street_map/random
 
 #### Responces
 
@@ -78,16 +79,17 @@ Request for objects by coordinates is #reverse.
 ```elixir
   OpenStreetMap.reverse(format: 'json', lat: '52.594417', lon: '39.493115', accept_language: 'en')
 ```
-    format - one of the [xml|json|jsonv2]
-    zoom - Level of detail required where 0 is country and 18 is house/building, one of the [0-18]
-    addressdetails - Include a breakdown of the address into elements, one of the [0|1]
     lat - Latitude, required
     lon - Longitude, required
+    format - one of the [xml|json|jsonv2], default - xml
+    zoom - Level of detail required where 0 is country and 18 is house/building, one of the [0-18]
+    addressdetails - Include a breakdown of the address into elements, one of the [0|1]
     extratags - Include additional information in the result if available, one of the [0|1]
     namedetails - Include a list of alternative names in the results, one of the [0|1]
     accept_language - Preferred language order for showing search results, default - en
     email - If you are making large numbers of request please include a valid email address
     hostname - allow overwriting the host name for users who have their own Nominatim installation, default - https://nominatim.openstreetmap.org/
+    user_agent - User-Agent identifying the application, default - hex/open_street_map/random
 
 #### Responces
 
