@@ -11,7 +11,7 @@ defmodule OpenStreetMap do
     type
     |> generate_url(args)
     |> prepare_url(type)
-    |> fetch
+    |> fetch(args)
   end
 
   defp generate_url(type, args) do
@@ -51,8 +51,8 @@ defmodule OpenStreetMap do
     type <> url
   end
 
-  defp fetch(url) do
-    base_url = "https://nominatim.openstreetmap.org/"
+  defp fetch(url, args) do
+    base_url = args[:hostname] || "https://nominatim.openstreetmap.org/"
     headers = ["Accept": "Application/json; Charset=utf-8"]
     options = [ssl: [{:versions, [:'tlsv1.2']}], recv_timeout: 500]
     case HTTPoison.get(base_url <> url, headers, options) do
