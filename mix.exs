@@ -30,6 +30,7 @@ defmodule OpenStreetMap.MixProject do
   defp deps do
     [
       {:httpoison, "1.4.0"},
+      {:poison, "~> 3.1"},
       {:ex_doc, "~> 0.14", only: :dev}
     ]
   end

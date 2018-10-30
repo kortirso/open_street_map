@@ -1,7 +1,21 @@
 defmodule OpenStreetMap do
+  @moduledoc """
+  Functions for requests to OpenStreetMap API
+  """
+
+  @doc """
+  Search objects by query
+  """
+  @spec search(keyword()) :: tuple()
+
   def search(args) do
     call("search", args)
   end
+
+  @doc """
+  Reverse geocoding generates an address from a latitude and longitude
+  """
+  @spec reverse(keyword()) :: tuple()
 
   def reverse(args) do
     call("reverse", args)
@@ -12,6 +26,7 @@ defmodule OpenStreetMap do
     |> generate_url(args)
     |> prepare_url(type)
     |> fetch(args)
+    |> parse(args)
   end
 
   defp generate_url(type, args) do
@@ -56,12 +71,15 @@ defmodule OpenStreetMap do
     headers = ["Accept": "Application/json; Charset=utf-8"]
     options = [ssl: [{:versions, [:'tlsv1.2']}], recv_timeout: 500]
     case HTTPoison.get(base_url <> url, headers, options) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        IO.puts body
-      {:ok, %HTTPoison.Response{status_code: 404}} ->
-        IO.puts "Not found :("
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        IO.inspect reason
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body}
+      {:ok, %HTTPoison.Response{status_code: 404}} -> {:error, "Page not found"}
+      {:error, %HTTPoison.Error{reason: reason}} -> {:error, reason}
+    end
+  end
+
+  defp parse({result, response}, args) do
+    if result == :ok && args[:format] != 'xml' do
+      {:ok, Poison.Parser.parse!(response)}
     end
   end
 end

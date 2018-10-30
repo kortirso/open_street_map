@@ -15,7 +15,6 @@ def deps do
 end
 ```
 
-
 ## Usage
 
 ### Search
@@ -23,7 +22,7 @@ end
 Request for search objects is #search.
 
 ```elixir
-  OpenStreetMap.search(q: '135 pilkington avenue, birmingham', format: 'json', addressdetails: '1', accept_language: 'ru')
+  OpenStreetMap.search(q: '135 pilkington avenue, birmingham', format: 'json', addressdetails: '1', accept_language: 'en')
 ```
     q - query
     format - one of the [xml|json|jsonv2]
@@ -41,33 +40,35 @@ Request for search objects is #search.
 #### Responces
 
 ```elixir
-  [
-    {
-      "place_id":"91015286",
-      "licence":"Data © OpenStreetMap contributors, ODbL 1.0. https:\/\/osm.org\/copyright",
-      "osm_type":"way",
-      "osm_id":"90394480",
-      "boundingbox":["52.5487473","52.5488481","-1.816513","-1.8163464"],
-      "lat":"52.5487921",
-      "lon":"-1.8164308339635",
-      "display_name":"135, Pilkington Avenue, Sutton Coldfield, Бирмингем, West Midlands Combined Authority, Западный Мидленд, Англия, B72 1LH, Великобритания",
-      "class":"building",
-      "type":"yes",
-      "importance":0.31025,
-      "address": {
-        "house_number":"135",
-        "road":"Pilkington Avenue",
-        "town":"Sutton Coldfield",
-        "city":"Бирмингем",
-        "county":"West Midlands Combined Authority",
-        "state_district":"Западный Мидленд",
-        "state":"Англия",
-        "postcode":"B72 1LH",
-        "country":"Великобритания",
-        "country_code":"gb"
+  {:ok,
+    [
+      %{
+        "address" => %{
+          "city" => "Birmingham",
+          "country" => "United Kingdom",
+          "country_code" => "gb",
+          "county" => "West Midlands Combined Authority",
+          "house_number" => "135",
+          "postcode" => "B72 1LH",
+          "road" => "Pilkington Avenue",
+          "state" => "England",
+          "state_district" => "West Midlands",
+          "town" => "Sutton Coldfield"
+        },
+        "boundingbox" => ["52.5487473", "52.5488481", "-1.816513", "-1.8163464"],
+        "class" => "building",
+        "display_name" => "135, Pilkington Avenue, Sutton Coldfield, Birmingham, West Midlands Combined Authority, West Midlands, England, B72 1LH, United Kingdom",
+        "importance" => 0.411,
+        "lat" => "52.5487921",
+        "licence" => "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "lon" => "-1.8164308339635",
+        "osm_id" => "90394480",
+        "osm_type" => "way",
+        "place_id" => "95707153",
+        "type" => "yes"
       }
-    }
-  ]
+    ]
+  }
 ```
 
 ### Reverse
@@ -75,7 +76,7 @@ Request for search objects is #search.
 Request for objects by coordinates is #reverse.
 
 ```elixir
-  OpenStreetMap.reverse(format: 'json', lat: '52.594417', lon: '39.493115', accept_language: 'ru')
+  OpenStreetMap.reverse(format: 'json', lat: '52.594417', lon: '39.493115', accept_language: 'en')
 ```
     format - one of the [xml|json|jsonv2]
     zoom - Level of detail required where 0 is country and 18 is house/building, one of the [0-18]
@@ -91,27 +92,29 @@ Request for objects by coordinates is #reverse.
 #### Responces
 
 ```elixir
-  {
-    "place_id":"150727169",
-    "licence":"Data © OpenStreetMap contributors, ODbL 1.0. https:\/\/osm.org\/copyright",
-    "osm_type":"way",
-    "osm_id":"367091730",
-    "lat":"52.5944624",
-    "lon":"39.4931348495468",
-    "display_name":"4, улица Хренникова, микрорайон Елецкий, Сырский рудник, Советский округ, Липецк, городской округ Липецк, Липецкая область, Центральный федеральный округ, 398000, РФ",
-    "address":{
-      "house_number":"4",
-      "road":"улица Хренникова",
-      "residential":"микрорайон Елецкий",
-      "suburb":"городской округ Липецк",
-      "city_district":"Советский округ",
-      "city":"Липецк",
-      "state":"Липецкая область",
-      "postcode":"398000",
-      "country":"РФ",
-      "country_code":"ru"
-    },
-    "boundingbox":["52.5943024","52.5946223","39.4929211","39.4933486"]
+  {:ok,
+    %{
+      "address" => %{
+        "city" => "Lipetsk",
+        "city_district" => "Советский округ",
+        "country" => "Russia",
+        "country_code" => "ru",
+        "house_number" => "4",
+        "postcode" => "398000",
+        "residential" => "микрорайон Елецкий",
+        "road" => "улица Хренникова",
+        "state" => "Lipetsk Oblast",
+        "suburb" => "Lipetsk"
+      },
+      "boundingbox" => ["52.5943024", "52.5946223", "39.4929211", "39.4933486"],
+      "display_name" => "4, улица Хренникова, микрорайон Елецкий, Сырский рудник, Советский округ, Lipetsk, Lipetsk Oblast, Central Federal District, 398000, Russia",
+      "lat" => "52.5944624",
+      "licence" => "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+      "lon" => "39.4931348495468",
+      "osm_id" => "367091730",
+      "osm_type" => "way",
+      "place_id" => "157477838"
+    }
   }
 ```
 
