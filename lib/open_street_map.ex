@@ -72,21 +72,26 @@ defmodule OpenStreetMap do
     options = [ssl: [{:versions, [:'tlsv1.2']}], recv_timeout: 500]
     case HTTPoison.get(base_url <> url, headers, options) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body}
+      {:ok, %HTTPoison.Response{status_code: 400, body: body}} -> {:error, body}
       {:ok, %HTTPoison.Response{status_code: 404}} -> {:error, "Page not found"}
       {:error, %HTTPoison.Error{reason: reason}} -> {:error, reason}
     end
   end
 
-  defp parse({result, response}, format) do
-    if parse_valid?(result, format) do
+  defp parse({result, response}, format) when result == :ok do
+    if parse_valid?(format) do
       {:ok, Poison.Parser.parse!(response)}
     else
       {:ok, response}
     end
   end
 
-  defp parse_valid?(result, format) do
-    result == :ok && (format == "json" || format == "jsonv2")
+  defp parse(response, _format) do
+    response
+  end
+
+  defp parse_valid?(format) do
+    format == "json" || format == "jsonv2"
   end
 
   defp user_agent(nil) do
