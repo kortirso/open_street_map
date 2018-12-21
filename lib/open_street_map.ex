@@ -10,7 +10,7 @@ defmodule OpenStreetMap do
 
   ## Example
 
-      iex> OpenStreetMap.search(q: "135 pilkington avenue, birmingham", format: "json", addressdetails: "1", accept_language: "en")
+      iex> OpenStreetMap.search([q: "135 pilkington avenue, birmingham", format: "json", addressdetails: "1", accept_language: "en"])
       {:ok, [%{"address" => %{},...}]}
 
   """
@@ -23,7 +23,7 @@ defmodule OpenStreetMap do
 
   ## Example
 
-      iex> OpenStreetMap.reverse(format: "json", lat: "52.594417", lon: "39.493115", accept_language: "en")
+      iex> OpenStreetMap.reverse([format: "json", lat: "52.594417", lon: "39.493115", accept_language: "en"])
       {:ok, %{"address" => %{},...}}
 
   """

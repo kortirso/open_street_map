@@ -22,7 +22,7 @@ end
 Request for search objects is #search.
 
 ```elixir
-  OpenStreetMap.search(q: "135 pilkington avenue, birmingham", format: "json", addressdetails: "1", accept_language: "en")
+  OpenStreetMap.search([q: "135 pilkington avenue, birmingham", format: "json", addressdetails: "1", accept_language: "en"])
 ```
     q - query, required
     format - one of the [xml|json|jsonv2], default - xml
@@ -77,7 +77,7 @@ Request for search objects is #search.
 Request for objects by coordinates is #reverse.
 
 ```elixir
-  OpenStreetMap.reverse(format: "json", lat: "52.594417", lon: "39.493115", accept_language: "en")
+  OpenStreetMap.reverse([format: "json", lat: "52.594417", lon: "39.493115", accept_language: "en"])
 ```
     lat - Latitude, required
     lon - Longitude, required

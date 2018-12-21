@@ -17,7 +17,7 @@ defmodule OpenStreetMap.Client do
   """
   @spec call(String.t() , list) :: {}
 
-  def call(type, args) do
+  def call(type, args) when type in ["search", "reverse"] and is_list(args) do
     type
     |> generate_url(args)
     |> fetch(args)
