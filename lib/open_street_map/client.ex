@@ -29,7 +29,7 @@ defmodule OpenStreetMap.Client do
   defp generate_url(type, args) do
     args
     |> Enum.filter(fn {key, _} -> Enum.member?(valid_args(type), key) end)
-    |> Enum.map(fn {key, value} -> "#{modify_key(key)}=#{modify_phrase(value)}" end)
+    |> Enum.map(fn {key, value} -> "#{modify_key(key)}=#{URI.encode_www_form(value)}" end)
     |> Enum.join("&")
     |> prepare_url(type)
   end
@@ -57,9 +57,6 @@ defmodule OpenStreetMap.Client do
       _ -> []
     end
   end
-
-  # Modify all phrases with replacing spaces for +
-  defp modify_phrase(value), do: String.replace(value, ~r/\s+/, "+")
 
   # Modify accept-language key
   defp modify_key(:accept_language), do: "accept-language"
