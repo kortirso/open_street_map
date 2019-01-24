@@ -8,7 +8,7 @@ defmodule OpenStreetMap.MixProject do
   def project do
     [
       app: :open_street_map,
-      version: "0.9.7",
+      version: "0.9.8",
       elixir: "~> 1.7",
       name: "OpenStreetMap",
       description: @description,
