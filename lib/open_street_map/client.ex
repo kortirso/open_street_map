@@ -28,8 +28,8 @@ defmodule OpenStreetMap.Client do
   # generate url with all params
   defp generate_url(type, args) do
     args
-    |> Enum.filter(fn {key, _} -> Enum.member?(valid_args(type), key) end)
-    |> Enum.map(fn {key, value} -> "#{modify_key(key)}=#{URI.encode_www_form(value)}" end)
+    |> Stream.filter(fn {key, _} -> Enum.member?(valid_args(type), key) end)
+    |> Stream.map(fn {key, value} -> "#{modify_key(key)}=#{URI.encode_www_form(value)}" end)
     |> Enum.join("&")
     |> prepare_url(type)
   end
