@@ -29,7 +29,8 @@ defmodule OpenStreetMap.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpoison, "~> 1.4"},
+      {:httpoison, "~> 1.6.0"},
+      {:hackney, "~> 1.16"},
       {:poison, "~> 3.1"},
       {:ex_doc, "~> 0.14", only: :dev}
     ]
