@@ -44,7 +44,7 @@ defmodule OpenStreetMap.Client do
   end
 
   # parse result
-  defp parse({result, response}, format) when format in ["json", "jsonv2"], do: {result, Poison.Parser.parse!(response)}
+  defp parse({result, response}, format) when format in ["json", "jsonv2"], do: {result, Jason.decode!(response)}
   defp parse(response, _), do: response
 
   # ADDITIONAL FUNCTIONS
