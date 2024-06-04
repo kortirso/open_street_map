@@ -36,7 +36,7 @@ defmodule OpenStreetMap.Client do
 
   # make request
   defp fetch(url, args) do
-    case HTTPoison.get(base_url(args) <> url, headers(args)) do
+    case HTTPoison.get(base_url(args) <> url, headers(args), request_options(args)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body}
       {:ok, %HTTPoison.Response{body: body}} -> {:error, body}
       {:error, %HTTPoison.Error{reason: reason}} -> {:error, reason}
@@ -44,6 +44,7 @@ defmodule OpenStreetMap.Client do
   end
 
   # parse result
+  defp parse({result, :timeout}, format) when format in ["json", "jsonv2"], do: {result, :timeout}
   defp parse({result, response}, format) when format in ["json", "jsonv2"], do: {result, Jason.decode!(response)}
   defp parse(response, _), do: response
 
@@ -69,6 +70,8 @@ defmodule OpenStreetMap.Client do
   defp base_url(args), do: args[:hostname] || "https://nominatim.openstreetmap.org/"
 
   defp headers(args), do: [{"Content-Type", "application/json"}, {"User-Agent", user_agent(args[:user_agent])}, {"Accept", "Application/json; Charset=utf-8"}]
+
+  defp request_options(args), do: args[:request_options] || []
 
   # define UserAgent for request
   defp user_agent(nil), do: "hex/open_street_map/#{random_string(16)}"
